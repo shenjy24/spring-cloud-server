@@ -30,4 +30,7 @@ public interface UserApiService {
      */
     @PostMapping("/test")
     Integer test();
+
+    @PostMapping("/getUserObject")
+    User getUserObject(@RequestBody User user);
 }
