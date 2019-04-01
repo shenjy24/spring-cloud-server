@@ -11,7 +11,8 @@ import java.util.List;
  *
  * @author shenjy 2018/10/25
  */
-@FeignClient(value = "spring-cloud-server", path = "/user")
+@FeignClient(value = "spring-cloud-server", url = "${api.server.host}")
+@RequestMapping(value = "/user")
 public interface UserApiService {
 
     /**
@@ -22,6 +23,11 @@ public interface UserApiService {
     @RequestMapping("/getUser")
     User getUser(@RequestParam("uid") Long uid) ;
 
+    /**
+     * 测试负载
+     *
+     * @return
+     */
     @PostMapping("/test")
     Integer test();
 }
