@@ -1,0 +1,93 @@
+server:
+  port: 18764
+  connection-timeout: 1000ms
+  compression:
+    enabled: true
+  tomcat:
+    max-threads: 100
+    max-connections: 10
+    min-spare-threads: 5
+    uri-encoding: UTF-8
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        domain: /
+
+logging:
+  config: classpath:log4j2.xml
+
+spring:
+  application:
+    name: spring-cloud-server
+  devtools:
+    restart:
+      enabled: false
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+
+  # 数据库配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/shenjy
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    type: org.apache.commons.dbcp.BasicDataSource
+
+
+# mybatis-plus配置
+mybatis-plus:
+  mapper-locations: 'classpath:/mapper/**/*Mapper.xml'
+  typeAliasesPackage: com.jonas.entity
+  global-config:
+    id-type: 2
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+# 服务注册配置
+eureka:
+  instance:
+    #心跳间隔
+    lease-renewal-interval-in-seconds: 5
+    #没有心跳的淘汰时间
+    lease-expiration-duration-in-seconds: 10
+    prefer-ip-address: true
+#    instance-id: server1
+  client:
+    #定时刷新本地缓存时间
+    registry-fetch-interval-seconds: 3
+    instance-info-replication-interval-seconds: 3
+    service-url:
+      defaultZone:  http://localhost:18761/eureka/
+
+# feign : 使用okHttp做为http client, 读写
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 1000
+        readTimeout: 1000
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+
+
+# 程序管理endpoint
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"

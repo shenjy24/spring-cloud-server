@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+
+    <Properties>
+
+        <Property name="AppName">spring-cloud-server</Property>
+        <Property name="HostName">docker-20</Property>
+        <Property name="GwsLogFile">log/gws.log</Property>
+        <Property name="SqlLogFile">log/sql.log</Property>
+        <Property name="AccessLogFile">log/access.log</Property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="GwsLogFileAppender" fileName="${GwsLogFile}"
+                     filePattern="${GwsLogFile}-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout
+                    pattern="time=%d{yyyy-MM-dd}T%d{HH:mm:ss.SSS+0800}`appName=${AppName}`hostName=${HostName}`logLevel=%-5p`%m %ex%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+
+        <RollingFile name="SysLogFileAppender" fileName="${GwsLogFile}"
+                     filePattern="${GwsLogFile}-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout
+                    pattern="time=%d{yyyy-MM-dd}T%d{HH:mm:ss.SSS+0800}`appName=${AppName}`hostName=${HostName}`logLevel=%-5p`msg=%m%ex%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="500MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+
+        <RollingFile name="SqlLogFileAppender" fileName="${SqlLogFile}"
+                     filePattern="${SqlLogFile}-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout
+                    pattern="time=%d{yyyy-MM-dd}T%d{HH:mm:ss.SSS+0800}`appName=${AppName}`hostName=${HostName}`logLevel=%-5p`%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="500MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+
+        <RollingFile name="AccessLogFileAppender" fileName="${AccessLogFile}"
+                     filePattern="${AccessLogFile}-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout
+                    pattern="time=%d{yyyy-MM-dd}T%d{HH:mm:ss.SSS+0800}`appName=${AppName}`hostName=${HostName}`logLevel=%-5p`%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="500MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+
+        <Logger name="com.jonas.config.GlobalExceptionHandler" level="off" additivity="false">
+            <appender-ref ref="SysLogFileAppender"/>
+        </Logger>
+
+        <Logger name="com.jonas.constant.BizException" level="error" additivity="false">
+            <appender-ref ref="SqlLogFileAppender"/>
+        </Logger>
+
+        <Logger name="org.springframework.security" level="warn" additivity="false">
+            <appender-ref ref="SysLogFileAppender"/>
+        </Logger>
+
+        <Logger name="org.springframework" level="error" additivity="false">
+            <appender-ref ref="SysLogFileAppender"/>
+        </Logger>
+
+        <Logger name="org.apache" level="warn" additivity="false">
+            <appender-ref ref="SysLogFileAppender"/>
+        </Logger>
+
+        <Logger name="org.thymeleaf" level="warn" additivity="false">
+            <appender-ref ref="SysLogFileAppender"/>
+        </Logger>
+
+        <Logger name="org.hibernate" level="error" additivity="false">
+            <appender-ref ref="SysLogFileAppender"/>
+        </Logger>
+
+        <Logger name="com.wogame.mapper" level="debug" additivity="false">
+            <appender-ref ref="SqlLogFileAppender" />
+        </Logger>
+
+        <Logger name="com.alibaba.druid" level="error" additivity="false">
+            <appender-ref ref="SysLogFileAppender"/>
+        </Logger>
+
+        <logger name="RocketmqCommon" level="error" additivity="false">
+            <appender-ref ref="SysLogFileAppender"/>
+        </logger>
+
+        <logger name="RocketmqRemoting" level="error" additivity="false">
+            <appender-ref ref="SysLogFileAppender"/>
+        </logger>
+
+        <logger name="RocketmqClient" level="error" additivity="false">
+            <appender-ref ref="SysLogFileAppender"/>
+        </logger>
+
+        <logger name="ESLOG" level="info" additivity="false">
+            <appender-ref ref="SysLogFileAppender"/>
+        </logger>
+
+        <logger name="org.springframework.boot" level="info" additivity="false">
+            <appender-ref ref="SysLogFileAppender"/>
+        </logger>
+
+        <logger name="SQLTRACE" level="info" additivity="false">
+            <appender-ref ref="SqlLogFileAppender"/>
+        </logger>
+
+        <logger name="ACCESSTRACE" level="info" additivity="false">
+            <appender-ref ref="AccessLogFileAppender"/>
+        </logger>
+
+        <logger name="GWS" level="info" additivity="false">
+            <appender-ref ref="GwsLogFileAppender"/>
+        </logger>
+
+        <Root level="info">
+            <AppenderRef ref="SysLogFileAppender"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
