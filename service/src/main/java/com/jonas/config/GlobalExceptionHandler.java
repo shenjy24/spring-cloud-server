@@ -29,18 +29,20 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public void handleException(Exception ex, HttpServletResponse response) {
         if (ex instanceof BizException) {
-            Iterable iterable = Splitter.on(":").trimResults().omitEmptyStrings().split(ex.getMessage());
-            List<String> item = Lists.newArrayList(iterable);
-            JsonResult result = new JsonResult(item.get(1), item.get(2), null);
             try {
                 response.setContentType("text/json; charset=UTF-8");
-                response.getWriter().write(JSON.toJSONString(result));
+                response.getWriter().write(ex.getMessage());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                SystemLogger.getLogger().error("server error: ", ex);
+                response.setContentType("text/json; charset=UTF-8");
+                response.getWriter().write(new BizException(SystemCode.SERVER_ERROR).getMessage());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-//        SystemLogger.error(ex, "handle exception");
-//        return new JsonResult(SystemCode.SERVER_ERROR);
     }
 }

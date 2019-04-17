@@ -49,6 +49,6 @@ public class UserController {
 
     @PostMapping("/getUserObject")
     public User getUserObject(@RequestBody User user) {
-        return user;
+        throw new RuntimeException();
     }
 }
