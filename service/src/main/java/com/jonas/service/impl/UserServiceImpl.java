@@ -1,10 +1,14 @@
 package com.jonas.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jonas.entity.User;
 import com.jonas.mapper.UserMapper;
 import com.jonas.service.UserService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 【 enter the class description 】
@@ -19,4 +23,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return baseMapper.selectById(uid);
     }
 
+
+    @Override
+    public List<User> listUser(Long uid, Long startTime) {
+
+        LambdaQueryWrapper<User> wrapper = new QueryWrapper<User>().lambda();
+        wrapper.ge(User::getCtime, startTime);
+        wrapper.eq(User::getId, uid);
+        return baseMapper.selectList(wrapper);
+    }
 }

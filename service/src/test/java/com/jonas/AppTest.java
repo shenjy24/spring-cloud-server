@@ -3,8 +3,8 @@ package com.jonas;
 import com.google.common.collect.Lists;
 import com.jonas.entity.Index;
 import com.jonas.entity.User;
-import com.jonas.mapper.UserMapper;
 import com.jonas.service.IndexService;
+import com.jonas.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class AppTest {
     private IndexService indexService;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Test
     public void batchSaveIndex() {
@@ -50,7 +50,7 @@ public class AppTest {
 
     @Test
     public void testListUser() {
-        List<User> users = userMapper.listUser(1234L);
+        List<User> users = userService.listUser(1L, 1546584559L);
         users.forEach(System.out::println);
     }
 }
