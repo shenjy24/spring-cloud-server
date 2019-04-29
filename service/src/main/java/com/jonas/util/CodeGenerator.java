@@ -2,7 +2,10 @@ package com.jonas.util;
 
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
+import com.baomidou.mybatisplus.generator.config.GlobalConfig;
+import com.baomidou.mybatisplus.generator.config.PackageConfig;
+import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 
@@ -53,12 +56,7 @@ public class CodeGenerator {
         packageConfig.setXml("mapper." + moduleName);
         packageConfig.setService("service." + moduleName);
         packageConfig.setServiceImpl("service." + moduleName + ".impl");
-
         generator.setPackageInfo(packageConfig);
-
-        // 配置模板
-        TemplateConfig templateConfig = new TemplateConfig();
-        generator.setTemplate(templateConfig);
 
         //策略配置
         StrategyConfig strategyConfig = new StrategyConfig();
