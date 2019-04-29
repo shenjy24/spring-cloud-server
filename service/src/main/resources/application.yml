@@ -41,12 +41,12 @@ spring:
 # mybatis-plus配置
 mybatis-plus:
   mapper-locations: 'classpath:/mapper/**/*Mapper.xml'
-  typeAliasesPackage: com.jonas.entity
   global-config:
     id-type: 2
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+  type-enums-package: com.jonas.enums
 
 # 服务注册配置
 #eureka:

@@ -1,5 +1,6 @@
 package com.jonas.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.jonas.entity.User;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  *
  * @author shenjy 2018/10/25
  */
-public interface UserService {
+public interface UserService extends IService<User> {
 
     /**
      * 获取单个用户

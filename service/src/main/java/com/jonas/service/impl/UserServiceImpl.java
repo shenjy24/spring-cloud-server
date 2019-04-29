@@ -23,13 +23,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return baseMapper.selectById(uid);
     }
 
-
     @Override
     public List<User> listUser(Long uid, Long startTime) {
-
         LambdaQueryWrapper<User> wrapper = new QueryWrapper<User>().lambda();
-        wrapper.ge(User::getCtime, startTime);
-        wrapper.eq(User::getId, uid);
+        if (null != uid) {
+            wrapper.eq(User::getId, uid);
+        }
+        if (null != startTime) {
+            wrapper.ge(User::getCtime, startTime);
+        }
         return baseMapper.selectList(wrapper);
     }
 }

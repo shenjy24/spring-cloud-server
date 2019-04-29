@@ -3,10 +3,17 @@
  */
 package com.jonas.config;
 
+import com.baomidou.mybatisplus.core.parser.ISqlParser;
+import com.baomidou.mybatisplus.extension.parsers.BlockAttackSqlParser;
+import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,6 +31,30 @@ public class MybatisPlusConfig {
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+
+        // 攻击 SQL 阻断解析器、加入解析链
+        List<ISqlParser> sqlParsers = new ArrayList<>();
+        sqlParsers.add(new BlockAttackSqlParser());
+        paginationInterceptor.setSqlParserList(sqlParsers);
+
         return paginationInterceptor;
+    }
+
+    /**
+     * 乐观锁配置
+     * @return
+     */
+    @Bean
+    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
+        return new OptimisticLockerInterceptor();
+    }
+
+    /**
+     * 性能分析插件
+     * @return
+     */
+    @Bean
+    public PerformanceInterceptor performanceInterceptor(){
+        return new PerformanceInterceptor();
     }
 }

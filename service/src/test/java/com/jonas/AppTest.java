@@ -1,8 +1,12 @@
 package com.jonas;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.google.common.collect.Lists;
 import com.jonas.entity.Index;
 import com.jonas.entity.User;
+import com.jonas.enums.AgeEnum;
+import com.jonas.mapper.UserMapper;
 import com.jonas.service.IndexService;
 import com.jonas.service.UserService;
 import org.junit.Test;
@@ -29,6 +33,9 @@ public class AppTest {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @Test
     public void batchSaveIndex() {
         List<Index> indices = Lists.newArrayList();
@@ -50,7 +57,46 @@ public class AppTest {
 
     @Test
     public void testListUser() {
-        List<User> users = userService.listUser(1L, 1546584559L);
-        users.forEach(System.out::println);
+        List<User> users = userService.listUser(null, null);
+        users.forEach(e -> {
+//            AgeEnum ageEnum = e.getAge();
+//            System.out.println(ageEnum.getCode() + ":" + ageEnum.getMessage());
+        });
+    }
+
+    @Test
+    public void testDeleteUser() {
+        userMapper.deleteById(1);
+    }
+
+    @Test
+    public void testSaveUser() {
+        User user = new User()
+                .setId(6L).setName("Tom").setAge(AgeEnum.ONE)
+                .setEmail("13662405749@qq.com");
+        userMapper.insert(user);
+    }
+
+    @Test
+    public void testUpdateUser() {
+        User user = new User().setId(6L).setAge(AgeEnum.TWO);
+        userMapper.updateById(user);
+    }
+
+    @Test
+    public void testSaveOrUpdate() {
+        User user = new User()
+                .setId(6L).setName("Tom").setAge(AgeEnum.THREE)
+                .setEmail("13662405749@qq.com");
+        userService.saveOrUpdate(user);
+    }
+
+    @Test
+    public void testUpdate() {
+        LambdaUpdateWrapper<User> wrapper = new UpdateWrapper<User>().lambda();
+        wrapper.set(User::getAge, 50);
+        wrapper.eq(User::getName, "Tom");
+
+        userService.update(new User(), wrapper);
     }
 }

@@ -1,7 +1,11 @@
 package com.jonas.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.baomidou.mybatisplus.annotation.*;
+import com.jonas.enums.AgeEnum;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -14,6 +18,7 @@ import java.io.Serializable;
  * @since 2018-08-24
  */
 @Data
+@Accessors(chain = true)
 @TableName("user")
 public class User implements Serializable {
 
@@ -33,12 +38,20 @@ public class User implements Serializable {
     /**
      * 年龄
      */
-    private Integer age;
+    @JSONField(serialzeFeatures = SerializerFeature.WriteEnumUsingToString)
+    private AgeEnum age;
 
     /**
      * 邮箱
      */
     private String email;
+
+    /**
+     * 是否删除
+     */
+    @TableLogic
+    @TableField("deleted")
+    private Integer deleted;
 
     /**
      * 创建时间
@@ -49,6 +62,6 @@ public class User implements Serializable {
     /**
      * 更新时间
      */
-    @TableField(value = "utime", fill = FieldFill.INSERT)
+    @TableField(value = "utime", fill = FieldFill.INSERT_UPDATE)
     private Long utime;
 }
