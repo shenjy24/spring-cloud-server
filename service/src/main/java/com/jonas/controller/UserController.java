@@ -1,15 +1,14 @@
 package com.jonas.controller;
 
-import com.jonas.constant.BizException;
-import com.jonas.constant.SystemCode;
 import com.jonas.entity.User;
+import com.jonas.mapper.UserMapper;
 import com.jonas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 【 enter the class description 】
@@ -20,35 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
 
-    @Value("${server.port}")
-    private Integer port;
-
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserMapper userMapper;
 
-    /**
-     * 获取单个用户
-     * @param uid
-     * @return
-     */
-    @RequestMapping("/getUser")
-    public User getUser(Long uid) {
-        User user = userService.getUser(uid);
-        if (null == user) {
-            throw new BizException(SystemCode.NEED_AUTH);
-        }
-
-        return user;
-    }
-
-    @PostMapping("/test")
-    public Integer test() {
-        return port;
-    }
-
-    @PostMapping("/getUserObject")
-    public User getUserObject(@RequestBody User user) {
-        throw new RuntimeException();
+    @PostMapping("/listUser")
+    public List<User> listUser(Long startTime) {
+        return userMapper.listUser(startTime);
     }
 }

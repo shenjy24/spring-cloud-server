@@ -1,8 +1,6 @@
 package com.jonas.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -17,7 +15,7 @@ import java.io.Serializable;
  */
 @Data
 @TableName("user")
-public class User extends SuperEntity<User> {
+public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,8 +40,15 @@ public class User extends SuperEntity<User> {
      */
     private String email;
 
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
+    /**
+     * 创建时间
+     */
+    @TableField(value = "ctime", fill = FieldFill.INSERT)
+    private Long ctime;
+
+    /**
+     * 更新时间
+     */
+    @TableField(value = "utime", fill = FieldFill.INSERT)
+    private Long utime;
 }
