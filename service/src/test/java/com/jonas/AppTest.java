@@ -99,4 +99,13 @@ public class AppTest {
 
         userService.update(new User(), wrapper);
     }
+
+    @Test
+    public void testLock() {
+        User user = new User();
+        user.setId(1L);
+        user.setBalance(10L);
+
+        userService.updateById(user);
+    }
 }

@@ -41,15 +41,6 @@ public class MybatisPlusConfig {
     }
 
     /**
-     * 乐观锁配置
-     * @return
-     */
-    @Bean
-    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
-        return new OptimisticLockerInterceptor();
-    }
-
-    /**
      * 性能分析插件
      * @return
      */

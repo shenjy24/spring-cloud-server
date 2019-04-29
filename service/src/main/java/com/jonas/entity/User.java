@@ -47,6 +47,11 @@ public class User implements Serializable {
     private String email;
 
     /**
+     * 余额
+     */
+    private Long balance;
+
+    /**
      * 是否删除
      */
     @TableLogic
