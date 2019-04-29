@@ -59,8 +59,8 @@ public class AppTest {
     public void testListUser() {
         List<User> users = userService.listUser(null, null);
         users.forEach(e -> {
-//            AgeEnum ageEnum = e.getAge();
-//            System.out.println(ageEnum.getCode() + ":" + ageEnum.getMessage());
+            AgeEnum ageEnum = e.getAge();
+            System.out.println(ageEnum.getCode() + ":" + ageEnum.getMessage());
         });
     }
 
