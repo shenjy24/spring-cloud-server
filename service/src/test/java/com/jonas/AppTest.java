@@ -58,10 +58,7 @@ public class AppTest {
     @Test
     public void testListUser() {
         List<User> users = userService.listUser(null, null);
-        users.forEach(e -> {
-            AgeEnum ageEnum = e.getAge();
-            System.out.println(ageEnum.getCode() + ":" + ageEnum.getMessage());
-        });
+        users.forEach(System.out::println);
     }
 
     @Test
@@ -72,7 +69,11 @@ public class AppTest {
     @Test
     public void testSaveUser() {
         User user = new User()
-                .setId(6L).setName("Tom").setAge(AgeEnum.ONE)
+                .setId(9L)
+                .setName("Tom")
+                .setAge(AgeEnum.ONE)
+                .setIsAudit(true)
+                .setBalance(0L)
                 .setEmail("13662405749@qq.com");
         userMapper.insert(user);
     }

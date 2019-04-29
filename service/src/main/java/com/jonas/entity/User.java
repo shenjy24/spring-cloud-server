@@ -52,11 +52,17 @@ public class User implements Serializable {
     private Long balance;
 
     /**
+     * 是否审核
+     */
+    @TableField("is_audit")
+    private Boolean isAudit;
+
+    /**
      * 是否删除
      */
     @TableLogic
     @TableField("deleted")
-    private Integer deleted;
+    private Boolean deleted;
 
     /**
      * 创建时间
