@@ -67,7 +67,7 @@ public class CodeGenerator {
         //是否为构建者模型
         strategyConfig.setEntityBuilderModel(true);
         //是否生成实体时，生成字段注解
-        strategyConfig.entityTableFieldAnnotationEnable(true);
+        strategyConfig.setEntityTableFieldAnnotationEnable(true);
         //逻辑删除属性名称
         strategyConfig.setLogicDeleteFieldName("deleted");
         strategyConfig.setInclude(tableNames);
